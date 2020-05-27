@@ -5,7 +5,7 @@
 # Copyright 2020 Therp B.V.
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class TrialBalanceReportWizard(models.TransientModel):
@@ -19,5 +19,15 @@ class TrialBalanceReportWizard(models.TransientModel):
     @api.multi
     def button_export_html(self):
         res = super(TrialBalanceReportWizard, self).button_export_html()
-        if self.horizontal = True:
-            res =
+        if self.horizontal:
+            action = self.env.ref(
+                'account_finiancial_report.action_report_trial_balance_hor')
+            res.update(action.read()[0])
+        return res
+
+    @api.multi
+    def _prepare_report_trial_balance(self):
+        res = super(
+            TrialBalanceReportWizard, self)._prepare_report_trial_balance()
+        res['horizontal'] = self.horizontal
+        return res
