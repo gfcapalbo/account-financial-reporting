@@ -9,7 +9,7 @@
     "category": 'Accounting & Finance',
     'website': 'https://github.com/OCA/account-financial-reporting',
     'license': 'AGPL-3',
-    "depends": ["account_invoicing"],
+    "depends": ["account_financial_report"],
     'data': [
         "data/report_paperformat.xml",
         "data/ir_actions_report_xml.xml",

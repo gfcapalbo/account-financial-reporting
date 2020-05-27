@@ -6,15 +6,18 @@
 Accounting Financial Report Horizontal
 ======================================
 
-This module provides a balance sheet and profit and loss report in landscape
-mode with assets to the left and liabilities to the right as is common in
-Italy and the Netherlands.
+This module offers trial_balance report defined in account_financial_report 
+in landscape mode.
+Up to version 11 it was an extension of the profit/loss sheet in odoo core.
+Now after the removal of such reports it is an extension of
+trial balance report in account_financial_report that allows us to 
+show the report in Horizontal mode.
 
 Usage
 =====
 
-After the module is installed, the balance sheet and profit and loss reports
-will be in landscape mode with assets left and liabilities right.
+The trial balance wizards will be provided with a checkbox "horizontal mode" 
+that will allow print and export to be done automatically in horizontal mode.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

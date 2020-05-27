@@ -2,3 +2,4 @@
 * Holger Brunn <hbrunn@therp.nl>
 * Stefan Rijnhart <srijnhart@therp.nl>
 * Nikos Tsirintanis <ntsirintanis@therp.nl>
+* Giovanni Francesco Capalbo <giovanni@therp.nl>
