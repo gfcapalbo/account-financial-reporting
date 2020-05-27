@@ -9,7 +9,6 @@ from odoo import api, fields, models
 
 
 class TrialBalanceReportWizard(models.TransientModel):
-    """Trial balance report wizard."""
 
     _inherit = "trial.balance.report.wizard"
     _description = "Trial Balance Report Wizard"
