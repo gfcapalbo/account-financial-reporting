@@ -17,15 +17,19 @@ class TrialBalanceReportWizard(models.TransientModel):
 
     @api.multi
     def button_export_html(self):
+        import pudb
+        pudb.set_trace()
         res = super(TrialBalanceReportWizard, self).button_export_html()
         if self.horizontal:
             action = self.env.ref(
-                'account_finiancial_report.action_report_trial_balance_hor')
+                'account_finiancial_report_horizontal.action_report_trial_balance_qweb_hor')
             res.update(action.read()[0])
         return res
 
     @api.multi
     def _prepare_report_trial_balance(self):
+        import pudb
+        pudb.set_trace()
         res = super(
             TrialBalanceReportWizard, self)._prepare_report_trial_balance()
         res['horizontal'] = self.horizontal

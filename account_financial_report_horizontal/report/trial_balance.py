@@ -14,11 +14,12 @@ class TrialBalanceReportCompute(models.TransientModel):
     def print_report(self, report_type):
         if report_type != 'xlsx' and self.horizontal:
             report_name = \
-               'account_financial_report_horizontal.report_trial_balance_qweb'
+               'account_financial_report.report_trial_balance_qweb'
             return self.env['ir.actions.report'].search(
                 [('report_name', '=', report_name),
-                 ('report_type', '=', report_type)],
-                limit=1).report_action(self, config=False)
+                 ('report_type', '=', report_type),
+                 ('name', '=', 'Trial Balance Horizontal')], limit=1
+            ).report_action(self, config=False)
         return super(TrialBalanceReportCompute, self).print_report(report_type)
 
     def _get_html(self):
@@ -30,7 +31,7 @@ class TrialBalanceReportCompute(models.TransientModel):
             if report:
                 rcontext['o'] = report
                 result['html'] = self.env.ref(
-                    'account_financial_report_horizontal.report_trial_balance'
+                    'account_financial_report.report_trial_balance'
                 ).render(rcontext)
                 return result
         return super(TrialBalanceReportCompute, self)._get_html()

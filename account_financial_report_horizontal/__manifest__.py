@@ -12,7 +12,7 @@
     "depends": ["account_financial_report"],
     'data': [
         "data/report_paperformat.xml",
-        "wizard/trial_balance_wizard_view.xml",
         "reports.xml",
+        "wizard/trial_balance_wizard_view.xml",
     ],
 }
