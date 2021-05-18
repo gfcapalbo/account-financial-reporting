@@ -416,6 +416,10 @@ FROM
                 account_partial_reconcile pr
                     ON ml.balance < 0 AND pr.credit_move_id = ml.id
             LEFT JOIN
+                account_move_line ml_future
+                    ON ml.balance < 0 AND pr.debit_move_id = ml_future.id
+                    AND ml_future.date > %s
+            LEFT JOIN
                 account_move_line ml_past
                     ON ml.balance < 0 AND pr.debit_move_id = ml_past.id
                     AND ml_past.date <= %s
@@ -426,19 +430,26 @@ FROM
                 account_partial_reconcile pr
                     ON ml.balance > 0 AND pr.debit_move_id = ml.id
             LEFT JOIN
+                account_move_line ml_future
+                    ON ml.balance > 0 AND pr.credit_move_id = ml_future.id
+                    AND ml_future.date > %s
+            LEFT JOIN
                 account_move_line ml_past
                     ON ml.balance > 0 AND pr.credit_move_id = ml_past.id
                     AND ml_past.date <= %s
         """
         sub_query += """
-            LEFT JOIN account_full_reconcile afr ON afr.id = ml.full_reconcile_id
             WHERE
                 ra.report_id = %s
-            AND ml.full_reconcile_id IS NULL OR afr.create_date >= %s
             GROUP BY
                 ml.id,
                 ml.balance,
                 ml.amount_currency
+            HAVING
+                (
+                    ml.full_reconcile_id IS NULL
+                    OR MAX(ml_future.id) IS NOT NULL
+                )
         """
         return sub_query
 
@@ -607,16 +618,14 @@ ORDER BY
 ORDER BY
     a.code, ml.date, ml.id
             """
-        full_reconcile_date = fields.Datetime.to_string(
-            fields.Datetime.from_string(self.date_at) + timedelta(days=1))
         self.env.cr.execute(
             query_inject_move_line,
             (self.date_at,
-             self.id,
-             full_reconcile_date,
              self.date_at,
              self.id,
-             full_reconcile_date,
+             self.date_at,
+             self.date_at,
+             self.id,
              self.env.uid,
              self.id,
              self.date_at,
